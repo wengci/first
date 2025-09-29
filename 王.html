@@ -1,0 +1,145 @@
+# first
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片展示页</title>
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- 配置Tailwind自定义颜色和字体 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        neutral: '#1F2937',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- 自定义工具类 -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .image-hover {
+                @apply transition-all duration-300 hover:scale-105 hover:shadow-xl;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- 页面头部 -->
+    <header class="bg-white shadow-md">
+        <div class="container mx-auto px-4 py-6">
+            <h1 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-neutral text-center">
+                图片展示集
+            </h1>
+            <p class="text-gray-600 text-center mt-2">精选三张精美图片，展示不同风格的视觉体验</p>
+        </div>
+    </header>
+
+    <!-- 主要内容区 -->
+    <main class="container mx-auto px-4 py-12">
+        <!-- 图片展示网格 -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- 第一张图片 -->
+            <div class="bg-white rounded-xl overflow-hidden shadow-lg image-hover">
+                <div class="relative h-64 overflow-hidden">
+                    <img src="https://picsum.photos/id/10/600/400" alt="山脉风景照，远处有连绵的山峰和蓝天白云" class="w-full h-full object-cover">
+                    <div class="absolute top-4 right-4 bg-primary/80 text-white text-sm px-3 py-1 rounded-full backdrop-blur-sm">
+                        自然风光
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h2 class="text-xl font-semibold text-neutral mb-2">壮丽山川</h2>
+                    <p class="text-gray-600">巍峨的山脉与蓝天白云相映成趣，展现大自然的磅礴气势与宁静之美。</p>
+                    <button class="mt-4 text-primary hover:text-primary/80 font-medium flex items-center transition-colors">
+                        查看详情 <i class="fa fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 第二张图片 -->
+            <div class="bg-white rounded-xl overflow-hidden shadow-lg image-hover">
+                <div class="relative h-64 overflow-hidden">
+                    <img src="https://picsum.photos/id/20/600/400" alt="城市建筑夜景，高楼大厦灯火通明" class="w-full h-full object-cover">
+                    <div class="absolute top-4 right-4 bg-secondary/80 text-white text-sm px-3 py-1 rounded-full backdrop-blur-sm">
+                        城市夜景
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h2 class="text-xl font-semibold text-neutral mb-2">都市夜色</h2>
+                    <p class="text-gray-600">夜幕下的城市灯火辉煌，展现出现代都市的活力与繁华，霓虹闪烁中蕴含着无限可能。</p>
+                    <button class="mt-4 text-primary hover:text-primary/80 font-medium flex items-center transition-colors">
+                        查看详情 <i class="fa fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 第三张图片 -->
+            <div class="bg-white rounded-xl overflow-hidden shadow-lg image-hover">
+                <div class="relative h-64 overflow-hidden">
+                    <img src="https://picsum.photos/id/30/600/400" alt="森林中的溪流，清澈的水流过石头，周围有绿色植物" class="w-full h-full object-cover">
+                    <div class="absolute top-4 right-4 bg-purple-500/80 text-white text-sm px-3 py-1 rounded-full backdrop-blur-sm">
+                        生态自然
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h2 class="text-xl font-semibold text-neutral mb-2">林间溪流</h2>
+                    <p class="text-gray-600">清澈的溪流穿梭于茂密的森林之间，带来大自然的清新气息与生命的律动。</p>
+                    <button class="mt-4 text-primary hover:text-primary/80 font-medium flex items-center transition-colors">
+                        查看详情 <i class="fa fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-neutral text-white py-8 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p>© 2023 图片展示页 | 设计与开发</p>
+            <div class="flex justify-center mt-4 space-x-4">
+                <a href="#" class="text-gray-300 hover:text-white transition-colors"><i class="fa fa-facebook"></i></a>
+                <a href="#" class="text-gray-300 hover:text-white transition-colors"><i class="fa fa-twitter"></i></a>
+                <a href="#" class="text-gray-300 hover:text-white transition-colors"><i class="fa fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 简单的交互脚本 -->
+    <script>
+        // 为图片添加加载动画效果
+        document.addEventListener('DOMContentLoaded', () => {
+            const images = document.querySelectorAll('img');
+            
+            images.forEach(img => {
+                img.classList.add('opacity-0', 'transition-opacity', 'duration-500');
+                
+                img.onload = () => {
+                    img.classList.remove('opacity-0');
+                    img.classList.add('opacity-100');
+                };
+                
+                // 如果图片已经缓存，手动触发onload
+                if (img.complete) {
+                    img.onload();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
