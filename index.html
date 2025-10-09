@@ -1,144 +1,360 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>图片展示页</title>
-    <!-- 引入Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- 引入Font Awesome -->
-    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    
-    <!-- 配置Tailwind自定义颜色和字体 -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#3B82F6',
-                        secondary: '#10B981',
-                        neutral: '#1F2937',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                    },
-                }
-            }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>中秋猜灯谜</title>
+  <!-- 引入Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- 引入Font Awesome -->
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  <!-- 配置Tailwind -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#E63946',    // 月饼红
+            secondary: '#FFB703',  // 月亮黄
+            accent: '#1D3557',     // 深蓝
+            light: '#F1FAEE',      // 浅色
+            dark: '#0D1B2A'        // 深色
+          },
+          fontFamily: {
+            song: ['"Noto Serif SC"', 'serif']
+          }
         }
-    </script>
-    
-    <!-- 自定义工具类 -->
-    <style type="text/tailwindcss">
-        @layer utilities {
-            .content-auto {
-                content-visibility: auto;
-            }
-            .image-hover {
-                @apply transition-all duration-300 hover:scale-105 hover:shadow-xl;
-            }
-        }
-    </style>
+      }
+    }
+  </script>
+  
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .text-shadow {
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      .text-shadow-lg {
+        text-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      }
+      .moon-glow {
+        box-shadow: 0 0 50px 20px rgba(255, 215, 0, 0.3);
+      }
+      .box-shadow-inner {
+        box-shadow: inset 0 0 15px rgba(0,0,0,0.3);
+      }
+      .perspective {
+        perspective: 1000px;
+      }
+      .preserve-3d {
+        transform-style: preserve-3d;
+      }
+      .backface-hidden {
+        backface-visibility: hidden;
+      }
+      .rotate-y-180 {
+        transform: rotateY(180deg);
+      }
+    }
+  </style>
+  
+  <!-- 引入中文字体 -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
-<body class="bg-gray-50 font-sans">
-    <!-- 页面头部 -->
-    <header class="bg-white shadow-md">
-        <div class="container mx-auto px-4 py-6">
-            <h1 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-neutral text-center">
-                图片展示集
-            </h1>
-            <p class="text-gray-600 text-center mt-2">精选三张精美图片，展示不同风格的视觉体验</p>
+
+<body class="bg-gradient-to-b from-dark to-accent min-h-screen font-song text-light overflow-x-hidden">
+  <!-- 背景装饰 - 星星 -->
+  <div id="stars" class="fixed inset-0 z-0"></div>
+  
+  <!-- 右上角月亮 -->
+  <div class="fixed top-8 right-8 w-32 h-32 md:w-48 md:h-48 rounded-full bg-secondary/90 moon-glow z-10 animate-pulse"></div>
+  
+  <!-- 月饼盒开场动画 -->
+  <div id="moonCakeBox" class="fixed inset-0 flex items-center justify-center z-50 perspective">
+    <div id="boxContainer" class="relative w-64 h-64 md:w-80 md:h-80 preserve-3d transition-all duration-1500 ease-in-out">
+      <!-- 盒子底部 -->
+      <div class="absolute w-full h-full bg-primary/90 rounded-lg box-shadow-inner backface-hidden flex items-center justify-center">
+        <div class="text-center">
+          <i class="fa fa-moon-o text-secondary text-4xl mb-2"></i>
+          <p class="text-light text-xl">中秋快乐</p>
         </div>
-    </header>
-
-    <!-- 主要内容区 -->
-    <main class="container mx-auto px-4 py-12">
-        <!-- 图片展示网格 -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- 第一张图片 -->
-            <div class="bg-white rounded-xl overflow-hidden shadow-lg image-hover">
-                <div class="relative h-64 overflow-hidden">
-                    <img src="https://picsum.photos/id/10/600/400" alt="山脉风景照，远处有连绵的山峰和蓝天白云" class="w-full h-full object-cover">
-                    <div class="absolute top-4 right-4 bg-primary/80 text-white text-sm px-3 py-1 rounded-full backdrop-blur-sm">
-                        自然风光
-                    </div>
-                </div>
-                <div class="p-6">
-                    <h2 class="text-xl font-semibold text-neutral mb-2">壮丽山川</h2>
-                    <p class="text-gray-600">巍峨的山脉与蓝天白云相映成趣，展现大自然的磅礴气势与宁静之美。</p>
-                    <button class="mt-4 text-primary hover:text-primary/80 font-medium flex items-center transition-colors">
-                        查看详情 <i class="fa fa-arrow-right ml-2"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- 第二张图片 -->
-            <div class="bg-white rounded-xl overflow-hidden shadow-lg image-hover">
-                <div class="relative h-64 overflow-hidden">
-                    <img src="https://picsum.photos/id/20/600/400" alt="城市建筑夜景，高楼大厦灯火通明" class="w-full h-full object-cover">
-                    <div class="absolute top-4 right-4 bg-secondary/80 text-white text-sm px-3 py-1 rounded-full backdrop-blur-sm">
-                        城市夜景
-                    </div>
-                </div>
-                <div class="p-6">
-                    <h2 class="text-xl font-semibold text-neutral mb-2">都市夜色</h2>
-                    <p class="text-gray-600">夜幕下的城市灯火辉煌，展现出现代都市的活力与繁华，霓虹闪烁中蕴含着无限可能。</p>
-                    <button class="mt-4 text-primary hover:text-primary/80 font-medium flex items-center transition-colors">
-                        查看详情 <i class="fa fa-arrow-right ml-2"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- 第三张图片 -->
-            <div class="bg-white rounded-xl overflow-hidden shadow-lg image-hover">
-                <div class="relative h-64 overflow-hidden">
-                    <img src="https://picsum.photos/id/30/600/400" alt="森林中的溪流，清澈的水流过石头，周围有绿色植物" class="w-full h-full object-cover">
-                    <div class="absolute top-4 right-4 bg-purple-500/80 text-white text-sm px-3 py-1 rounded-full backdrop-blur-sm">
-                        生态自然
-                    </div>
-                </div>
-                <div class="p-6">
-                    <h2 class="text-xl font-semibold text-neutral mb-2">林间溪流</h2>
-                    <p class="text-gray-600">清澈的溪流穿梭于茂密的森林之间，带来大自然的清新气息与生命的律动。</p>
-                    <button class="mt-4 text-primary hover:text-primary/80 font-medium flex items-center transition-colors">
-                        查看详情 <i class="fa fa-arrow-right ml-2"></i>
-                    </button>
-                </div>
-            </div>
+      </div>
+      
+      <!-- 盒子盖子 -->
+      <div id="boxLid" class="absolute w-full h-full bg-primary/90 rounded-lg box-shadow-inner backface-hidden rotate-y-180 flex items-center justify-center">
+        <div class="text-center">
+          <i class="fa fa-gift text-secondary text-4xl mb-2"></i>
+          <p class="text-light text-xl">打开月饼盒</p>
         </div>
-    </main>
-
-    <!-- 页脚 -->
-    <footer class="bg-neutral text-white py-8 mt-12">
-        <div class="container mx-auto px-4 text-center">
-            <p>© 2023 图片展示页 | 设计与开发</p>
-            <div class="flex justify-center mt-4 space-x-4">
-                <a href="#" class="text-gray-300 hover:text-white transition-colors"><i class="fa fa-facebook"></i></a>
-                <a href="#" class="text-gray-300 hover:text-white transition-colors"><i class="fa fa-twitter"></i></a>
-                <a href="#" class="text-gray-300 hover:text-white transition-colors"><i class="fa fa-instagram"></i></a>
-            </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 主内容区 -->
+  <div id="mainContent" class="container mx-auto px-4 py-16 relative z-20 hidden">
+    <!-- 标题 -->
+    <div class="text-center mb-12">
+      <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold text-secondary text-shadow-lg mb-4">中秋猜灯谜</h1>
+      <p class="text-light/80 text-lg max-w-2xl mx-auto">
+        中秋佳节，猜灯谜是传统习俗之一。解开这些灯谜，感受中秋的乐趣吧！
+      </p>
+    </div>
+    
+    <!-- 灯谜游戏区 -->
+    <div class="max-w-2xl mx-auto bg-light/10 backdrop-blur-md rounded-xl p-6 md:p-8 shadow-xl border border-light/20">
+      <!-- 灯谜显示区 -->
+      <div class="mb-8">
+        <h2 class="text-xl text-secondary mb-4 flex items-center">
+          <i class="fa fa-lightbulb-o mr-2"></i>当前灯谜
+        </h2>
+        <div id="lanternRiddle" class="bg-light/5 rounded-lg p-6 min-h-[100px] text-center text-xl md:text-2xl">
+          点击开始按钮开始猜灯谜
         </div>
-    </footer>
+      </div>
+      
+      <!-- 答案输入区 -->
+      <div class="mb-6">
+        <label for="answer" class="block text-secondary mb-2 flex items-center">
+          <i class="fa fa-pencil mr-2"></i>你的答案
+        </label>
+        <div class="flex">
+          <input type="text" id="answer" class="flex-1 bg-light/10 border border-light/30 rounded-l-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-secondary transition-all" placeholder="请输入答案">
+          <button id="checkBtn" class="bg-secondary text-accent px-6 py-3 rounded-r-lg font-bold hover:bg-secondary/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+            提交
+          </button>
+        </div>
+      </div>
+      
+      <!-- 提示和反馈 -->
+      <div id="feedback" class="mb-6 h-12 flex items-center justify-center text-lg"></div>
+      
+      <!-- 控制按钮 -->
+      <div class="flex justify-between">
+        <button id="startBtn" class="bg-primary text-light px-6 py-3 rounded-lg font-bold hover:bg-primary/90 transition-all">
+          开始游戏
+        </button>
+        <button id="hintBtn" class="bg-accent text-light px-6 py-3 rounded-lg font-bold hover:bg-accent/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+          <i class="fa fa-question-circle mr-1"></i>提示
+        </button>
+      </div>
+      
+      <!-- 得分和进度 -->
+      <div class="mt-8 flex justify-between items-center">
+        <div class="flex items-center">
+          <i class="fa fa-trophy text-secondary mr-2"></i>
+          <span>得分: <span id="score" class="text-secondary">0</span></span>
+        </div>
+        <div class="flex items-center">
+          <span>进度: <span id="progress" class="text-secondary">0/5</span></span>
+          <i class="fa fa-moon-o text-secondary ml-2"></i>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 中秋装饰元素 -->
+    <div class="absolute -bottom-10 -left-10 w-40 h-40 opacity-20">
+      <img src="https://picsum.photos/id/292/200/200" alt="中秋装饰" class="w-full h-full object-contain">
+    </div>
+    <div class="absolute -bottom-5 -right-5 w-32 h-32 opacity-20">
+      <img src="https://picsum.photos/id/1080/200/200" alt="中秋装饰" class="w-full h-full object-contain">
+    </div>
+  </div>
+  
+  <!-- 页脚 -->
+  <footer class="text-center py-6 text-light/60 text-sm relative z-20 hidden" id="footer">
+    <p>祝大家中秋快乐，阖家团圆 &copy; 2023</p>
+  </footer>
 
-    <!-- 简单的交互脚本 -->
-    <script>
-        // 为图片添加加载动画效果
-        document.addEventListener('DOMContentLoaded', () => {
-            const images = document.querySelectorAll('img');
-            
-            images.forEach(img => {
-                img.classList.add('opacity-0', 'transition-opacity', 'duration-500');
-                
-                img.onload = () => {
-                    img.classList.remove('opacity-0');
-                    img.classList.add('opacity-100');
-                };
-                
-                // 如果图片已经缓存，手动触发onload
-                if (img.complete) {
-                    img.onload();
-                }
-            });
-        });
-    </script>
+  <script>
+    // 创建星星背景
+    function createStars() {
+      const starsContainer = document.getElementById('stars');
+      const starCount = 100;
+      
+      for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        const size = Math.random() * 3 + 1;
+        
+        star.style.position = 'absolute';
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        star.style.backgroundColor = 'white';
+        star.style.borderRadius = '50%';
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.top = `${Math.random() * 100}%`;
+        star.style.opacity = Math.random() * 0.8 + 0.2;
+        star.style.animation = `twinkle ${Math.random() * 3 + 2}s infinite alternate`;
+        
+        starsContainer.appendChild(star);
+      }
+    }
+    
+    // 添加星星闪烁动画
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes twinkle {
+        from { opacity: 0.2; }
+        to { opacity: 1; }
+      }
+      
+      @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0px); }
+      }
+    `;
+    document.head.appendChild(style);
+    
+    // 月饼盒动画
+    function animateMoonCakeBox() {
+      const boxContainer = document.getElementById('boxContainer');
+      const boxLid = document.getElementById('boxLid');
+      
+      // 延迟后开始打开盒子动画
+      setTimeout(() => {
+        boxContainer.style.transform = 'rotateY(180deg)';
+        
+        // 动画完成后隐藏盒子，显示主内容
+        setTimeout(() => {
+          document.getElementById('moonCakeBox').classList.add('opacity-0');
+          setTimeout(() => {
+            document.getElementById('moonCakeBox').style.display = 'none';
+            document.getElementById('mainContent').classList.remove('hidden');
+            document.getElementById('footer').classList.remove('hidden');
+          }, 500);
+        }, 1500);
+      }, 1000);
+    }
+    
+    // 灯谜数据
+    const riddles = [
+      {
+        question: "小时绷着青脸皮，老来皱起红脸皮，生的熟吃惹人笑，熟的生吃不稀奇。(打一水果)",
+        answer: "枣",
+        hint: "这种水果成熟后是红色的，可以生吃也可以煮熟吃"
+      },
+      {
+        question: "外圆正割垂直线，积分开方斜角边。(打一传统节日)",
+        answer: "中秋",
+        hint: "这个节日我们会赏月、吃月饼"
+      },
+      {
+        question: "长安一片月(打一字)",
+        answer: "胀",
+        hint: "长安可以理解为'长'，一片月是'月'"
+      },
+      {
+        question: "中秋归来(打一词牌名)",
+        answer: "八归",
+        hint: "中秋是八月，归来是'归'"
+      },
+      {
+        question: "嫦娥下凡(打一花名)",
+        answer: "月季",
+        hint: "嫦娥来自月亮，下凡可以理解为'季'"
+      }
+    ];
+    
+    // 游戏状态
+    let currentRiddleIndex = 0;
+    let score = 0;
+    let gameStarted = false;
+    
+    // 游戏函数
+    function startGame() {
+      currentRiddleIndex = 0;
+      score = 0;
+      gameStarted = true;
+      
+      updateScore();
+      showCurrentRiddle();
+      updateProgress();
+      
+      document.getElementById('startBtn').textContent = '重新开始';
+      document.getElementById('answer').disabled = false;
+      document.getElementById('checkBtn').disabled = false;
+      document.getElementById('hintBtn').disabled = false;
+      document.getElementById('feedback').textContent = '';
+      document.getElementById('answer').focus();
+    }
+    
+    function showCurrentRiddle() {
+      if (currentRiddleIndex < riddles.length) {
+        document.getElementById('lanternRiddle').textContent = riddles[currentRiddleIndex].question;
+        document.getElementById('answer').value = '';
+        document.getElementById('feedback').textContent = '';
+      } else {
+        endGame();
+      }
+    }
+    
+    function checkAnswer() {
+      const userAnswer = document.getElementById('answer').value.trim().toLowerCase();
+      const correctAnswer = riddles[currentRiddleIndex].answer.toLowerCase();
+      const feedbackElement = document.getElementById('feedback');
+      
+      if (userAnswer === correctAnswer) {
+        feedbackElement.textContent = '恭喜你，答对了！';
+        feedbackElement.className = 'mb-6 h-12 flex items-center justify-center text-lg text-green-400';
+        score += 10;
+        updateScore();
+        
+        setTimeout(() => {
+          currentRiddleIndex++;
+          updateProgress();
+          showCurrentRiddle();
+        }, 1500);
+      } else {
+        feedbackElement.textContent = '答错了，再试试吧！';
+        feedbackElement.className = 'mb-6 h-12 flex items-center justify-center text-lg text-red-400';
+      }
+    }
+    
+    function showHint() {
+      const feedbackElement = document.getElementById('feedback');
+      feedbackElement.textContent = `提示: ${riddles[currentRiddleIndex].hint}`;
+      feedbackElement.className = 'mb-6 h-12 flex items-center justify-center text-lg text-yellow-400';
+      
+      // 提示会扣分
+      if (score > 0) {
+        score -= 2;
+        updateScore();
+      }
+    }
+    
+    function updateScore() {
+      document.getElementById('score').textContent = score;
+    }
+    
+    function updateProgress() {
+      document.getElementById('progress').textContent = `${currentRiddleIndex}/${riddles.length}`;
+    }
+    
+    function endGame() {
+      gameStarted = false;
+      document.getElementById('lanternRiddle').textContent = `恭喜你完成了所有灯谜！你的最终得分是 ${score} 分`;
+      document.getElementById('answer').disabled = true;
+      document.getElementById('checkBtn').disabled = true;
+      document.getElementById('hintBtn').disabled = true;
+      document.getElementById('feedback').textContent = '';
+    }
+    
+    // 事件监听
+    document.addEventListener('DOMContentLoaded', () => {
+      createStars();
+      animateMoonCakeBox();
+      
+      document.getElementById('startBtn').addEventListener('click', startGame);
+      document.getElementById('checkBtn').addEventListener('click', checkAnswer);
+      document.getElementById('hintBtn').addEventListener('click', showHint);
+      
+      // 回车键提交答案
+      document.getElementById('answer').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' && gameStarted) {
+          checkAnswer();
+        }
+      });
+    });
+  </script>
 </body>
 </html>
